@@ -1,5 +1,5 @@
 import React from 'react';
-import './Player.css';
+import './Player.scss';
 
 class Player extends React.Component
 { 
@@ -8,7 +8,7 @@ class Player extends React.Component
         this.state = {
             coordinates: [0,0]
         };
-        this.myInput = React.createRef()
+        this.playerRef = React.createRef()
     }
 
     componentDidMount() {
@@ -20,7 +20,11 @@ class Player extends React.Component
     }
 
     onMouseMove = (e) => {
-        this.setState({coordinates: [e.pageX - this.myInput.current.offsetWidth / 2, e.pageY - this.myInput.current.offsetHeight / 2]}); 
+        let parentOffsetX = document.getElementById("app").getBoundingClientRect().left;
+        let parentOffsetY = document.getElementById("app").getBoundingClientRect().top;
+
+        this.setState({coordinates: [e.pageX - this.playerRef.current.offsetWidth/2 - parentOffsetX, e.pageY - this.playerRef.current.offsetHeight/2 - parentOffsetY]}); 
+
         document.onmouseup = this.onMouseUp;
     }
 
@@ -36,8 +40,7 @@ class Player extends React.Component
             top: `${this.state.coordinates[1]}px`,
         }
         return(
-            <div id="player" ref={this.myInput} className='player-model' style={style}></div>
-        
+            <div id="player" ref={this.playerRef} className='player-model' style={style}></div>        
         );
     }
 }

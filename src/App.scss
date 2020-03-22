@@ -1,0 +1,15 @@
+$width: 600px;
+$height: 600px;
+
+.game-area {
+  position: relative;
+  margin: 50px auto;
+  width: $width;
+  height: $height;
+  border: 2px solid #000;
+}
+
+:export {
+  width: $width;
+  height: $height;
+}
