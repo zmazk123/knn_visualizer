@@ -2,7 +2,8 @@ import React from 'react';
 import appCSS from './App.scss';
 import DataBlockCSS from './DataBlock/DataBlock.scss';
 import Player from './Player/Player.js';
-import DataBlock from './DataBlock/DataBlock';
+import DataBlock from './DataBlock/DataBlock.js';
+import MyColorPicker from './MyColorPicker/MyColorPicker.js';
 import Papa from 'papaparse'
 
 class App extends React.Component
@@ -13,7 +14,11 @@ class App extends React.Component
             k: '',
             file: null,
             data: [],
-            types: []
+            types: [],
+            curenntColor: "",
+            currentStats: "",
+            playerCoordinates: null,
+            ratios: null
         };
 
         this.handleChangeK = this.handleChangeK.bind(this);
@@ -21,14 +26,18 @@ class App extends React.Component
 
         this.handleChangeFile = this.handleChangeFile.bind(this);
         this.handleSubmitFile = this.handleSubmitFile.bind(this);
+
+        this.setTypes = this.setTypes.bind(this);
+        this.setDataBlockStats = this.setDataBlockStats.bind(this);
+        this.setPlayerCoordinates = this.setPlayerCoordinates.bind(this);
     }
-    
+  
     handleChangeK(e) {    
         this.setState({k: e.target.value});  
     }
 
     handleSubmitK(e) {
-        alert('A name was submitted: ' + this.state.k);
+        alert('A name was submitted: ' + this.state.k);     
         e.preventDefault();
     }
 
@@ -40,6 +49,15 @@ class App extends React.Component
         let parseData = [];
         let parseTypes = [];
         let counter = 0;
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
 
         Papa.parse(this.state.file, {
             header: false,
@@ -83,9 +101,10 @@ class App extends React.Component
                     return;
                 }
 
-                parseData.push({ x: results.data[0], y: results.data[1], type: results.data[2] });
-
-                if(counter === 0) parseTypes.push({ type:results.data[2], count:0  });
+                if(counter === 0){
+                    let color = getRandomColor();
+                    parseTypes.push({ type:results.data[2], count:0, color: color  });
+                } 
 
                 for (var i = 0; i < parseTypes.length; i++) {
                     if(results.data[2] === parseTypes[i].type){
@@ -93,10 +112,13 @@ class App extends React.Component
                         break;
                     }
                     if(i === parseTypes.length-1){
-                        parseTypes.push({ type:results.data[2], count:1  });
+                        let color = getRandomColor();
+                        parseTypes.push({ type:results.data[2], count:1, color: color  });
                         break;
                     }
                 }
+
+                parseData.push({ x: results.data[0], y: results.data[1], type: results.data[2] });
 
                 counter++;
             }
@@ -105,6 +127,8 @@ class App extends React.Component
         setTimeout(() => {
             this.setState({data: parseData});
             this.setState({types: parseTypes});
+            this.setState({currentStats: ""});
+            this.setState({ratios: null});
         }, 10);
 
         e.preventDefault();
@@ -117,11 +141,27 @@ class App extends React.Component
         let ratioX = (parseInt(appCSS.width) - parseInt(DataBlockCSS.width))/maxX;
         let ratioY = (parseInt(appCSS.height) - parseInt(DataBlockCSS.height))/maxY;
 
-        return this.state.data.map((dataVar) => <DataBlock x={dataVar.x * ratioX} y={(maxY - dataVar.y) * ratioY}/>); 
+        setTimeout(() => {
+            this.setState({ratios: [ratioX, ratioY]});
+        }, 5);
+
+        return this.state.data.map((dataVar) => <DataBlock x={dataVar.x * ratioX} y={(maxY - dataVar.y) * ratioY} types={this.state.types} data={dataVar} setDataBlockStats={this.setDataBlockStats}/>); 
     }
 
     mapTypes(){
-        return this.state.types.map((typeVar) => <text> | {typeVar.type}: {typeVar.count} | </text>); 
+        return this.state.types.map((typeVar) => <div style={{ "background-color": typeVar.color }}><text> | {typeVar.type}: {typeVar.count} | </text><MyColorPicker type={typeVar} setTypes={this.setTypes}/></div>); 
+    }
+
+    setTypes(typeVar){
+        this.setState({curenntColor: typeVar.color});
+    }
+
+    setDataBlockStats(stats){
+        this.setState({currentStats: stats});
+    }
+
+    setPlayerCoordinates(coordiantes){
+        this.setState({playerCoordinates: [coordiantes[0]/this.state.ratios[0], coordiantes[1]/this.state.ratios[0]]});
     }
 
     render()
@@ -148,8 +188,15 @@ class App extends React.Component
                 <hr></hr>
             </div>
             <div className='data-area' id="app">                           
-                <Player/>
+                <Player setPlayerCoordinates={this.setPlayerCoordinates}/>
                 { this.mapDataBlocks() }           
+            </div>
+            <div>
+                <h2>Current stats</h2>
+                <hr></hr>
+                <text>X: {this.state.currentStats.x} </text>
+                <text>Y: {this.state.currentStats.y} </text>
+                <text>Type: {this.state.currentStats.type} </text>
             </div>
         </div>  
       );

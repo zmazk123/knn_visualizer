@@ -1,7 +1,15 @@
+$width: 20px;
+$height: 20px;
+
 .player-model {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: $width;
+    height: $height;
     background-color: green;
     z-index: 100;
   }
+
+:export {
+  width: $width;
+  height: $height;
+}

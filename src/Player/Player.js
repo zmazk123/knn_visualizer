@@ -1,5 +1,6 @@
 import React from 'react';
-import './Player.scss';
+import PlayerCSS from'./Player.scss';
+import appCSS from '../App.scss';
 
 class Player extends React.Component
 { 
@@ -20,10 +21,18 @@ class Player extends React.Component
     }
 
     onMouseMove = (e) => {
-        let parentOffsetX = document.getElementById("app").getBoundingClientRect().left;
-        let parentOffsetY = document.getElementById("app").getBoundingClientRect().top;
+        let appElement = document.getElementById("app");
 
-        this.setState({coordinates: [e.pageX - this.playerRef.current.offsetWidth/2 - parentOffsetX, e.pageY - this.playerRef.current.offsetHeight/2 - parentOffsetY]}); 
+        let parentOffsetX = appElement.getBoundingClientRect().left + document.documentElement.scrollLeft;
+        let parentOffsetY = appElement.getBoundingClientRect().top + document.documentElement.scrollTop;
+
+        let newPosX = e.pageX - this.playerRef.current.offsetWidth/2 - parentOffsetX;
+        let newPosY = e.pageY - this.playerRef.current.offsetHeight/2 - parentOffsetY;
+
+        if(newPosX >= 0 && newPosY >= 0 && newPosX <= parseInt(appCSS.width) - parseInt(PlayerCSS.width) && newPosY <= parseInt(appCSS.height) - parseInt(PlayerCSS.height)){
+            this.setState({coordinates: [newPosX, newPosY]}); 
+            this.props.setPlayerCoordinates(this.state.coordinates);
+        }
 
         document.onmouseup = this.onMouseUp;
     }
