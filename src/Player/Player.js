@@ -10,17 +10,27 @@ class Player extends React.Component
             coordinates: [0,0]
         };
         this.playerRef = React.createRef()
+
+        this.props.setToZero(this.setToZero);
+
+        this.onMouseDown = this.onMouseDown.bind(this);
+        this.onMouseMove = this.onMouseMove.bind(this);
+        this.sonMouseUp = this.onMouseUp.bind(this);
+    }
+
+    setToZero = () => {
+        this.setState({coordinates : [0,0]});    
     }
 
     componentDidMount() {
         document.getElementById("player").onmousedown = this.onMouseDown;
     }
 
-    onMouseDown = (e) => {
+    onMouseDown(e){
         document.onmousemove = this.onMouseMove;
     }
 
-    onMouseMove = (e) => {
+    onMouseMove(e){
         let appElement = document.getElementById("app");
 
         let parentOffsetX = appElement.getBoundingClientRect().left + document.documentElement.scrollLeft;
@@ -37,7 +47,7 @@ class Player extends React.Component
         document.onmouseup = this.onMouseUp;
     }
 
-    onMouseUp = (e) => {
+    onMouseUp(e){
         document.onmousemove = null;
         document.onmouseup = null;
     }

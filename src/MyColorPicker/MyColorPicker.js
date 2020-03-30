@@ -7,16 +7,18 @@ class MyColorPicker extends React.Component
         super(props);
         this.state = {
             color: ""
-        };
+        }
+
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    handleChange = (color) => {
+    handleChange(color){
         this.setState({ color: color.hex });   
         
         let type = this.props.type;
         type.color = this.state.color;
 
-        this.props.setTypes(type);
+        this.props.setColor(type);
     };
 
     render()

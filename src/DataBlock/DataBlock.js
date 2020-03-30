@@ -6,36 +6,56 @@ class DataBlock extends React.Component
     constructor(props) {
         super(props);
         this.state = {
-            color: ""
+            color: "blue"
         };
+
+        this.onClickHandler = this.onClickHandler.bind(this);
     }
 
-    onClickHandler = () =>{
+    onClickHandler(){
         this.props.setDataBlockStats(this.props.data);
     }
 
-    render()
-    {
-        let types = this.props.types;
+    componentWillReceiveProps(nextProps){
+        let types = nextProps.types;
         let type = this.props.data.type;
 
         for (var i = 0; i < types.length; i++) {
             if(types[i].type === type){
-                setTimeout(() => {
-                    this.setState({color: types[i].color}); 
-                }, 5);       
+                this.setState({color: types[i].color});                 
                 break;
             }
         }
+    }
 
-        const style = {
+
+    render()
+    {
+        const styleUnmarked = {
             left: `${this.props.x}px`,
             top: `${this.props.y}px`,
-            "background-color": `${this.state.color}`,
+            "background-color": `${this.state.color}` 
         }
-        return(
-            <div className='data-block-model' style={style} onClick={this.onClickHandler}></div>        
-        );
+
+        const styleMarked = {
+            left: `${this.props.x}px`,
+            top: `${this.props.y}px`,
+            "background-color": `${this.state.color}` ,
+            border: "2px solid #000"
+        }
+
+        let mark = this.props.data.mark;
+
+        if(mark === false){
+            return(
+                <div className='data-block-model' style={styleUnmarked} onClick={this.onClickHandler}></div>        
+            );
+        }
+        else{
+            return(
+                <div className='data-block-model' style={styleMarked} onClick={this.onClickHandler}></div>        
+            );
+        }
     }
 }
 

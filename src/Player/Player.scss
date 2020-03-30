@@ -1,13 +1,13 @@
 $width: 20px;
 $height: 20px;
 
-.player-model {
-    position: absolute;
-    width: $width;
-    height: $height;
-    background-color: green;
-    z-index: 100;
-  }
+.player-model{
+  position: absolute;
+  width: $width;
+  height: $height;
+  background-color: green;
+  z-index: 100;
+}
 
 :export {
   width: $width;

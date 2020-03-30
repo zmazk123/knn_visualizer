@@ -1,12 +1,12 @@
 $width: 20px;
 $height: 20px;
 
-.data-block-model {
-    position: absolute;
-    width: $width;
-    height: $height;
-    z-index: 2;
-  }
+.data-block-model{
+  position: absolute;
+  width: $width;
+  height: $height;
+  z-index: 2;
+}
 
 :export {
   width: $width;
