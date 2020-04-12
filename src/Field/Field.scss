@@ -1,0 +1,40 @@
+$width: 700px;
+$height: 700px;
+
+.data-area {
+  position: relative;
+  float: left;
+  margin: 5px auto;
+  width: $width+4;
+  height: $height+4;
+  border: 2px solid #000;
+  text-align: center;
+}
+
+.dot {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  float: left;
+}
+
+.round-corners {
+  background-color: #c2d2ff;
+  padding-bottom: 10px; 
+  padding-top: 10px; 
+  padding-left: 20px; 
+  padding-right: 20px; 
+  margin: 10px auto;
+  height: 80px;  
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+:export {
+  width: $width;
+  height: $height;
+}

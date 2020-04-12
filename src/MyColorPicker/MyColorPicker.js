@@ -24,7 +24,7 @@ class MyColorPicker extends React.Component
     render()
     {
         return(
-            <HuePicker color={ this.state.color } onChange={ this.handleChange } />
+            <HuePicker width="1" color={ this.state.color } onChange={ this.handleChange } onChangeComplete={ this.handleChange }/>
         );
     }
 }

@@ -1,11 +1,13 @@
-$width: 20px;
-$height: 20px;
+$width: 15px;
+$height: 15px;
 
 .data-block-model{
   position: absolute;
   width: $width;
   height: $height;
   z-index: 2;
+  text-align: center;
+  border-radius: 50%;
 }
 
 :export {

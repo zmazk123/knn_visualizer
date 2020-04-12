@@ -28,19 +28,18 @@ class DataBlock extends React.Component
         }
     }
 
-
     render()
     {
         const styleUnmarked = {
             left: `${this.props.x}px`,
             top: `${this.props.y}px`,
-            "background-color": `${this.state.color}` 
+            backgroundColor: `${this.state.color}` 
         }
 
         const styleMarked = {
             left: `${this.props.x}px`,
             top: `${this.props.y}px`,
-            "background-color": `${this.state.color}` ,
+            backgroundColor: `${this.state.color}` ,
             border: "2px solid #000"
         }
 

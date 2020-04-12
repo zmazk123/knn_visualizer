@@ -1,6 +1,6 @@
 import React from 'react';
 import PlayerCSS from'./Player.scss';
-import appCSS from '../App.scss';
+import fieldCSS from '../Field/Field.scss';
 
 class Player extends React.Component
 { 
@@ -39,7 +39,7 @@ class Player extends React.Component
         let newPosX = e.pageX - this.playerRef.current.offsetWidth/2 - parentOffsetX;
         let newPosY = e.pageY - this.playerRef.current.offsetHeight/2 - parentOffsetY;
 
-        if(newPosX >= 0 && newPosY >= 0 && newPosX <= parseInt(appCSS.width) - parseInt(PlayerCSS.width) && newPosY <= parseInt(appCSS.height) - parseInt(PlayerCSS.height)){
+        if(newPosX >= 0 && newPosY >= 0 && newPosX <= parseInt(fieldCSS.width) - parseInt(PlayerCSS.width) && newPosY <= parseInt(fieldCSS.height) - parseInt(PlayerCSS.height)){
             this.setState({coordinates: [newPosX, newPosY]}); 
             this.props.setPlayerCoordinates(this.state.coordinates);
         }
