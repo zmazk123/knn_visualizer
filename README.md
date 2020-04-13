@@ -2,6 +2,8 @@
 
 First JavaScript project! A side project made during the virus to expand my frontend skills.
 
+You can access the project at: https://zmazk123.github.io/knn_visualizer/
+
 The intent of this project is to visualy present the KNN algorithm.
 K nearest neighbour(KNN) is a classification algorithm, which
 means that it assigns a class to an unknown object with known parameters from a provided data set consisting of objects with known parameters and their
