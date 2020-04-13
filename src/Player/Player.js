@@ -15,7 +15,7 @@ class Player extends React.Component
 
         this.onMouseDown = this.onMouseDown.bind(this);
         this.onMouseMove = this.onMouseMove.bind(this);
-        this.sonMouseUp = this.onMouseUp.bind(this);
+        this.onMouseUp = this.onMouseUp.bind(this);
     }
 
     setToZero = () => {
